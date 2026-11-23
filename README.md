@@ -150,6 +150,14 @@ npm run package
 npm run build
 ```
 
+### Install in Another Project
+
+Install directly from GitHub (`dist/` is prebuilt in the repo):
+
+```bash
+npm install github:ICtallgeeseXC/eva-ui-csstokens-svelte
+```
+
 ### Using in Any Framework (Web Components, CSS Tokens & Svelte 5)
 
 `eva-ui` is **framework-agnostic** — it works in **React, Vue, Angular, Solid, Astro, vanilla HTML/JS, and Svelte 5**:
