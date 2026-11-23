@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onDestroy } from 'svelte';
 	import {
 		EvaAudioController,
 		EvaCircuitVisualizer,
@@ -89,6 +90,100 @@
 	let controllerTime = $state(0);
 	let controllerDuration = $state(0);
 
+	let sysPlaying = $state(false);
+	let sysAnalyser = $state<AnalyserNode | null>(null);
+	let sysTrackLabel = $state('SYSTEM AUDIO // LIVE');
+	let sysError = $state('');
+
+	let sysStream: MediaStream | null = null;
+	let sysCtx: AudioContext | null = null;
+	let sysSource: MediaStreamAudioSourceNode | null = null;
+
+	const activePlaying = $derived(sysPlaying || controllerPlaying);
+	const activeAnalyser = $derived(sysPlaying && sysAnalyser ? sysAnalyser : controllerAnalyser);
+	const activeTrack = $derived(sysPlaying ? sysTrackLabel : controllerTrack);
+
+	function stopSystemAudio() {
+		try {
+			sysSource?.disconnect();
+		} catch {}
+		sysSource = null;
+		if (sysStream) {
+			for (const t of sysStream.getTracks()) t.stop();
+			sysStream = null;
+		}
+		if (sysCtx && sysCtx.state !== 'closed') {
+			sysCtx.close().catch(() => {});
+		}
+		sysCtx = null;
+		sysAnalyser = null;
+		sysPlaying = false;
+	}
+
+	async function toggleSystemAudio() {
+		if (sysPlaying) {
+			stopSystemAudio();
+			sysError = '';
+			return;
+		}
+		sysError = '';
+		if (typeof navigator === 'undefined' || !navigator.mediaDevices?.getDisplayMedia) {
+			sysError = 'SYSTEM AUDIO CAPTURE NOT SUPPORTED IN THIS BROWSER';
+			return;
+		}
+		try {
+			const stream = await navigator.mediaDevices.getDisplayMedia({
+				video: true,
+				audio: {
+					echoCancellation: false,
+					noiseSuppression: false,
+					autoGainControl: false
+				}
+			});
+			// Stop video track immediately; we only need the audio feed
+			for (const vt of stream.getVideoTracks()) {
+				vt.stop();
+				stream.removeTrack(vt);
+			}
+			const audioTracks = stream.getAudioTracks();
+			if (audioTracks.length === 0) {
+				for (const t of stream.getTracks()) t.stop();
+				sysError = 'NO AUDIO TRACK — CHECK "SHARE SYSTEM AUDIO" IN THE BROWSER PROMPT';
+				return;
+			}
+			const Ctx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+			const ctx = new Ctx();
+			if (ctx.state === 'suspended') await ctx.resume();
+			const analyserNode = ctx.createAnalyser();
+			analyserNode.fftSize = 2048;
+			analyserNode.smoothingTimeConstant = 0.72;
+			const source = ctx.createMediaStreamSource(stream);
+			source.connect(analyserNode);
+
+			const label = audioTracks[0].label?.trim();
+			sysStream = stream;
+			sysCtx = ctx;
+			sysSource = source;
+			sysAnalyser = analyserNode;
+			sysTrackLabel = label ? `SYSTEM AUDIO // ${label.toUpperCase()}` : 'SYSTEM AUDIO // LIVE';
+			sysPlaying = true;
+
+			audioTracks[0].addEventListener('ended', () => {
+				stopSystemAudio();
+			});
+		} catch (err) {
+			stopSystemAudio();
+			const name = err instanceof DOMException ? err.name : '';
+			if (name !== 'NotAllowedError' && name !== 'AbortError') {
+				sysError = 'FAILED TO CAPTURE SYSTEM AUDIO';
+			}
+		}
+	}
+
+	onDestroy(() => {
+		stopSystemAudio();
+	});
+
 	const currentChannel = $derived(channels[activePos] ?? channels[0]);
 
 	function formatTime(sec: number): string {
@@ -100,7 +195,7 @@
 	}
 
 	const songLines = $derived.by(() => {
-		const clean = controllerTrack.replace(/\.[A-Z0-9]{2,5}$/i, '').trim() || 'UNTITLED';
+		const clean = activeTrack.replace(/\.[A-Z0-9]{2,5}$/i, '').trim() || 'UNTITLED';
 		const dashIdx = clean.indexOf(' - ');
 		if (dashIdx > 0) {
 			return {
@@ -120,10 +215,13 @@
 	});
 
 	const songSubtitle = $derived.by(() => {
-		const base = `${controllerTrack} // ${formatTime(controllerTime)} / ${formatTime(controllerDuration)} // ${currentChannel.title}`;
-		if (controllerAnalyser) {
-			const khz = Math.round(controllerAnalyser.context.sampleRate / 1000);
-			return `${base} // ${khz}KHZ FFT:${controllerAnalyser.fftSize}`;
+		const timePart = sysPlaying
+			? 'LIVE INPUT STREAM'
+			: `${formatTime(controllerTime)} / ${formatTime(controllerDuration)}`;
+		const base = `${activeTrack} // ${timePart} // ${currentChannel.title}`;
+		if (activeAnalyser) {
+			const khz = Math.round(activeAnalyser.context.sampleRate / 1000);
+			return `${base} // ${khz}KHZ FFT:${activeAnalyser.fftSize}`;
 		}
 		return base;
 	});
@@ -133,6 +231,22 @@
 	<div class="viz-deck">
 		<EvaPanel title={`OPTICAL AUDIO DECK // ${currentChannel.title}`} code={currentChannel.code}>
 			{#snippet actions()}
+				<button
+					type="button"
+					class="viz-chip-btn"
+					onclick={toggleSystemAudio}
+					aria-pressed={sysPlaying}
+					title="Capture PC / tab system audio (enable 'Share system audio' in browser prompt)"
+				>
+					<EvaHudBox size="sm" color={sysPlaying ? '#46f76a' : '#ff941a'}>
+						<span class="viz-dual">
+							<span>SYS AUDIO</span>
+							<span class="viz-dual__opt" class:is-lit={sysPlaying}>ON</span>
+							<span class="viz-dual__sep">/</span>
+							<span class="viz-dual__opt" class:is-lit={!sysPlaying}>OFF</span>
+						</span>
+					</EvaHudBox>
+				</button>
 				<button
 					type="button"
 					class="viz-chip-btn"
@@ -151,15 +265,15 @@
 				</button>
 				<EvaHudBox
 					size="sm"
-					color={controllerPlaying ? '#46f76a' : '#ff941a'}
+					color={activePlaying ? '#46f76a' : '#ff941a'}
 					text={`CAM: ${currentChannel.camCode}`}
 					width="68px"
 					mono
 				/>
 				<EvaLedIndicator
 					label="AUDIO BUS"
-					state={controllerPlaying ? 'on' : 'off'}
-					pulse={controllerPlaying}
+					state={activePlaying ? 'on' : 'off'}
+					pulse={activePlaying}
 					minWidth="86px"
 				/>
 			{/snippet}
@@ -227,11 +341,15 @@
 				{/each}
 			</div>
 
+			{#if sysError}
+				<div class="viz-sys-err eva-display" role="alert">{sysError}</div>
+			{/if}
+
 			<!-- Song details title bar above the camcorder container -->
 			<div class="viz-title-bar">
 				<EvaTitleCard
 					variant="banner"
-					kicker={`AUDIO DECK // ${currentChannel.camCode} // ${controllerPlaying ? 'LIVE SIGNAL' : 'STANDBY'}`}
+					kicker={`AUDIO DECK // ${currentChannel.camCode} // ${activePlaying ? (sysPlaying ? 'SYS AUDIO LIVE' : 'LIVE SIGNAL') : 'STANDBY'}`}
 					line1={songLines.line1}
 					line2={songLines.line2}
 					subtitle={songSubtitle}
@@ -255,37 +373,37 @@
 					{#if currentChannel.idx === 0}
 						<EvaEnergyVisualizer
 							showControls={false}
-							externalPlaying={controllerPlaying}
-							externalAnalyser={controllerAnalyser}
-							externalTrackLabel={controllerTrack}
+							externalPlaying={activePlaying}
+							externalAnalyser={activeAnalyser}
+							externalTrackLabel={activeTrack}
 						/>
 					{:else if currentChannel.idx === 1}
 						<EvaEqPillars
 							showControls={false}
-							externalPlaying={controllerPlaying}
-							externalAnalyser={controllerAnalyser}
-							externalTrackLabel={controllerTrack}
+							externalPlaying={activePlaying}
+							externalAnalyser={activeAnalyser}
+							externalTrackLabel={activeTrack}
 						/>
 					{:else if currentChannel.idx === 2}
 						<EvaPhaseScope
 							showControls={false}
-							externalPlaying={controllerPlaying}
-							externalAnalyser={controllerAnalyser}
-							externalTrackLabel={controllerTrack}
+							externalPlaying={activePlaying}
+							externalAnalyser={activeAnalyser}
+							externalTrackLabel={activeTrack}
 						/>
 					{:else if currentChannel.idx === 3}
 						<EvaCircuitVisualizer
 							showControls={false}
-							externalPlaying={controllerPlaying}
-							externalAnalyser={controllerAnalyser}
-							externalTrackLabel={controllerTrack}
+							externalPlaying={activePlaying}
+							externalAnalyser={activeAnalyser}
+							externalTrackLabel={activeTrack}
 						/>
 					{:else}
 						<EvaPatternMatrix
 							showControls={false}
-							externalPlaying={controllerPlaying}
-							externalAnalyser={controllerAnalyser}
-							externalTrackLabel={controllerTrack}
+							externalPlaying={activePlaying}
+							externalAnalyser={activeAnalyser}
+							externalTrackLabel={activeTrack}
 						/>
 					{/if}
 				</div>
@@ -332,6 +450,17 @@
 
 	.viz-title-bar {
 		margin-bottom: 0.72rem;
+	}
+
+	.viz-sys-err {
+		margin-bottom: 0.55rem;
+		padding: 0.35rem 0.65rem;
+		border: 1px solid #ff4747;
+		background: rgba(255, 34, 34, 0.12);
+		color: #ff6b6b;
+		font-size: 0.78rem;
+		letter-spacing: 0.05em;
+		border-radius: 3px;
 	}
 
 	.viz-tab {
