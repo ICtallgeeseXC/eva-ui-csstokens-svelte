@@ -1,15 +1,15 @@
 <div align="center">
 
 ```text
-╔══════════════════════════════════════════════════════════════════════════════╗
-║  NERV // TOKYO-3 INTERFACE SYSTEM                                 [SYS:00]   ║
-║  ███████╗██╗   ██╗ █████╗       ██╗   ██╗██╗                                 ║
-║  ██╔════╝██║   ██║██╔══██╗      ██║   ██║██║   Svelte 5 · Web Components     ║
-║  █████╗  ██║   ██║███████║█████╗██║   ██║██║   Design Tokens · Audio FFT     ║
-║  ██╔══╝  ╚██╗ ██╔╝██╔══██║╚════╝██║   ██║██║   MAGI · Tactical HUDs          ║
-║  ███████╗ ╚████╔╝ ██║  ██║      ╚██████╔╝██║                                 ║
-║  ╚══════╝  ╚═══╝  ╚═╝  ╚═╝       ╚═════╝ ╚═╝   STATUS: ALL SYSTEMS NOMINAL   ║
-╚══════════════════════════════════════════════════════════════════════════════╝
++------------------------------------------------------------------------------+
+|  NERV // TOKYO-3 INTERFACE SYSTEM                                  [SYS:00]  |
+|                                                                              |
+|  #####  #   #   ###          #   #  ###    Svelte 5 . Web Components         |
+|  #      #   #  #   #         #   #   #     Design Tokens . Audio FFT         |
+|  ####   #   #  #####  #####  #   #   #     MAGI . Tactical HUDs              |
+|  #       # #   #   #         #   #   #                                       |
+|  #####    #    #   #          ###   ###    STATUS: ALL SYSTEMS NOMINAL       |
++------------------------------------------------------------------------------+
 ```
 
 **Reusable Evangelion / NERV-inspired UI component library, CSS design tokens, live Web Audio FFT visualizers, and video-frame motif explorer.**
