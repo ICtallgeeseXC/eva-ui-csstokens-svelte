@@ -89,31 +89,21 @@
 						</button>
 					{/each}
 					<EvaCrtControl compact />
-					<button
-						type="button"
-						class="eva-btn hdr-toggle"
-						onclick={() => (headerHidden = true)}
-						aria-expanded={true}
-						title="Collapse top navigation header"
-					>
-						<span class="hdr-toggle__arrow" aria-hidden="true">▲</span>
-						<span>HIDE HEADER</span>
-					</button>
 				</div>
 			</div>
 		</header>
-	{:else}
-		<button
-			type="button"
-			class="eva-btn hdr-toggle hdr-toggle--tab"
-			onclick={() => (headerHidden = false)}
-			aria-expanded={false}
-			title="Restore top navigation header"
-		>
-			<span class="hdr-toggle__arrow" aria-hidden="true">▼</span>
-			<span>SHOW HEADER</span>
-		</button>
 	{/if}
+
+	<button
+		type="button"
+		class="eva-btn hdr-toggle hdr-toggle--tab"
+		onclick={() => (headerHidden = !headerHidden)}
+		aria-expanded={!headerHidden}
+		title={headerHidden ? 'Restore top navigation header' : 'Collapse top navigation header'}
+	>
+		<span class="hdr-toggle__arrow" aria-hidden="true">{headerHidden ? '▼' : '▲'}</span>
+		<span>{headerHidden ? 'SHOW HEADER' : 'HIDE HEADER'}</span>
+	</button>
 
 	<main class="main-content">
 		{#if children}
@@ -192,11 +182,13 @@
 	}
 
 	.hdr-toggle {
-		min-height: 1.75rem;
-		padding: 0.2rem 0.6rem;
-		font-size: 0.72rem;
+		min-height: 1.65rem;
+		padding: 0.18rem 0.55rem;
+		font-size: 0.7rem;
 		gap: 0.34rem;
-		--btn-c: var(--eva-text-muted);
+		width: 7.7rem;
+		justify-content: center;
+		--btn-c: var(--eva-primary);
 	}
 
 	.hdr-toggle__arrow {
@@ -213,9 +205,14 @@
 		border-top-left-radius: 0;
 		border-top-right-radius: 0;
 		outline-offset: 0;
-		--btn-c: var(--eva-primary);
-		background: rgba(0, 0, 0, 0.92);
+		background: rgba(0, 0, 0, 0.94);
 		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.92);
+	}
+
+	@media (max-width: 1680px) {
+		.topbar__inner {
+			padding-right: 9.2rem;
+		}
 	}
 
 	.theme-pill {
@@ -260,7 +257,7 @@
 
 	@media (max-width: 1000px) {
 		.topbar__inner {
-			padding: 0.45rem 0.9rem;
+			padding: 0.45rem 8.7rem 0.45rem 0.9rem;
 			gap: 0.5rem 0.75rem;
 		}
 
@@ -291,8 +288,9 @@
 
 		.hdr-toggle {
 			min-height: 1.48rem;
-			padding: 0.14rem 0.48rem;
+			padding: 0.14rem 0.45rem;
 			font-size: 0.66rem;
+			width: 7.1rem;
 		}
 
 		.theme-bar :global(.eva-crt) {
@@ -303,7 +301,7 @@
 
 	@media (max-width: 640px) {
 		.topbar__inner {
-			padding: 0.42rem 0.7rem;
+			padding: 0.42rem 8.3rem 0.42rem 0.7rem;
 			gap: 0.45rem;
 		}
 
