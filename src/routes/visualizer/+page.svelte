@@ -641,6 +641,17 @@
 		object-fit: contain;
 	}
 
+	/* Keep Energy Visualizer footer clear of bottom-right camcorder X00 OSD */
+	.viz-stage :global(.ev-ftr) {
+		justify-content: flex-start;
+		padding-right: 7.5rem;
+	}
+
+	/* Keep top-left HUD title clear of camcorder || / ▶ indicator */
+	.viz-stage :global(.ev-hud-tl) {
+		left: 3.4rem;
+	}
+
 	.viz-dock {
 		position: fixed;
 		left: 0;

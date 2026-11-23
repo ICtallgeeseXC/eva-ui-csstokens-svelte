@@ -507,6 +507,7 @@
 		position: absolute;
 		top: 0.25rem;
 		left: 0.35rem;
+		transform-origin: top left;
 		pointer-events: none;
 	}
 
@@ -514,6 +515,7 @@
 		position: absolute;
 		top: 29%;
 		left: 11%;
+		transform-origin: left center;
 		pointer-events: none;
 	}
 
@@ -521,6 +523,7 @@
 		position: absolute;
 		top: 34%;
 		right: 17%;
+		transform-origin: right center;
 		pointer-events: none;
 	}
 
@@ -532,6 +535,7 @@
 		flex-direction: column;
 		align-items: flex-end;
 		gap: 0.2rem;
+		transform-origin: top right;
 		pointer-events: none;
 	}
 
@@ -541,6 +545,7 @@
 		align-items: center;
 		justify-content: flex-end;
 		gap: 0.45rem;
+		transform-origin: right center;
 	}
 
 	.ev-ch-txt {
@@ -563,6 +568,40 @@
 		font-weight: 700;
 		color: var(--eva-text-muted);
 		margin-left: auto;
+	}
+
+	@container (min-width: 680px) {
+		.ev-hud-tl,
+		.ev-hud-tr,
+		.ev-hud-mid-l,
+		.ev-hud-mid-r {
+			transform: scale(1.22);
+		}
+
+		.ev-ftr {
+			gap: 0.6rem;
+		}
+
+		.ev-ftr :global(.eva-hud-box) {
+			zoom: 1.2;
+		}
+	}
+
+	@container (min-width: 860px) {
+		.ev-hud-tl,
+		.ev-hud-tr,
+		.ev-hud-mid-l,
+		.ev-hud-mid-r {
+			transform: scale(1.42);
+		}
+
+		.ev-ftr {
+			gap: 0.75rem;
+		}
+
+		.ev-ftr :global(.eva-hud-box) {
+			zoom: 1.38;
+		}
 	}
 
 	@container (max-width: 520px) {
