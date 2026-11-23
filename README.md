@@ -19,7 +19,21 @@
 [![Themes](https://img.shields.io/badge/Themes-5_CRT_Phosphor-72f7ff?style=flat-square&labelColor=08090c)](./src/lib/styles/tokens.css)
 [![Deploy](https://img.shields.io/badge/Cloudflare-Wrangler-46f76a?style=flat-square&logo=cloudflare&logoColor=000000&labelColor=08090c)](./wrangler.jsonc)
 
+**[Live Demo](https://eva-ui.tallgeese.workers.dev/)**
+
 </div>
+
+---
+
+## Screenshots
+
+### `03 // AUDIO VISUALIZER` — Optical Audio Deck & Live Input
+
+![EVA-UI Audio Visualizer](./docs/screenshots/visualizer.png)
+
+### `04 // COMMAND CONSOLE` — Incident Queue & Tactical Telemetry
+
+![EVA-UI Command Console](./docs/screenshots/command-console.png)
 
 ---
 
