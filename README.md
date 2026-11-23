@@ -29,7 +29,7 @@
 
 ### `03 // AUDIO VISUALIZER` — Optical Audio Deck & Live Input
 
-![EVA-UI Audio Visualizer](./docs/screenshots/visualizer.png)
+![EVA-UI Audio Visualizer](./docs/vis.gif)
 
 ### `04 // COMMAND CONSOLE` — Incident Queue & Tactical Telemetry
 
