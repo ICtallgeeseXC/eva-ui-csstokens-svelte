@@ -91,9 +91,8 @@
 	let controllerDuration = $state(0);
 
 	let sysPlaying = $state(false);
-	let sysMode = $state<'device' | 'tab' | null>(null);
 	let sysAnalyser = $state<AnalyserNode | null>(null);
-	let sysTrackLabel = $state('LIVE AUDIO // INPUT');
+	let sysTrackLabel = $state('AUDIO IN // LIVE');
 	let sysError = $state('');
 	let audioInputs = $state<{ deviceId: string; label: string }[]>([]);
 	let selectedDeviceId = $state('');
@@ -140,10 +139,9 @@
 		sysCtx = null;
 		sysAnalyser = null;
 		sysPlaying = false;
-		sysMode = null;
 	}
 
-	function attachAudioStream(stream: MediaStream, trackLabelPrefix: string, mode: 'device' | 'tab') {
+	function attachAudioStream(stream: MediaStream) {
 		const audioTracks = stream.getAudioTracks();
 		const Ctx =
 			window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
@@ -162,8 +160,7 @@
 		sysCtx = ctx;
 		sysSource = source;
 		sysAnalyser = analyserNode;
-		sysTrackLabel = label ? `${trackLabelPrefix} // ${label.toUpperCase()}` : trackLabelPrefix;
-		sysMode = mode;
+		sysTrackLabel = label ? `AUDIO IN // ${label.toUpperCase()}` : 'AUDIO IN // LIVE';
 		sysPlaying = true;
 
 		audioTracks[0]?.addEventListener('ended', () => {
@@ -189,7 +186,7 @@
 				}
 			});
 			await refreshAudioInputs();
-			attachAudioStream(stream, 'AUDIO IN', 'device');
+			attachAudioStream(stream);
 		} catch (err) {
 			stopSystemAudio();
 			const name = err instanceof DOMException ? err.name : '';
@@ -204,52 +201,12 @@
 	}
 
 	async function toggleDeviceAudio() {
-		if (sysPlaying && sysMode === 'device') {
+		if (sysPlaying) {
 			stopSystemAudio();
 			sysError = '';
 			return;
 		}
 		await startDeviceAudio();
-	}
-
-	async function toggleTabAudio() {
-		if (sysPlaying && sysMode === 'tab') {
-			stopSystemAudio();
-			sysError = '';
-			return;
-		}
-		stopSystemAudio();
-		sysError = '';
-		if (typeof navigator === 'undefined' || !navigator.mediaDevices?.getDisplayMedia) {
-			sysError = 'TAB / SCREEN AUDIO CAPTURE NOT SUPPORTED IN THIS BROWSER';
-			return;
-		}
-		try {
-			const stream = await navigator.mediaDevices.getDisplayMedia({
-				video: true,
-				audio: {
-					echoCancellation: false,
-					noiseSuppression: false,
-					autoGainControl: false
-				}
-			});
-			for (const vt of stream.getVideoTracks()) {
-				vt.stop();
-				stream.removeTrack(vt);
-			}
-			if (stream.getAudioTracks().length === 0) {
-				for (const t of stream.getTracks()) t.stop();
-				sysError = 'NO AUDIO TRACK — CHECK "SHARE AUDIO" IN THE BROWSER PROMPT';
-				return;
-			}
-			attachAudioStream(stream, 'TAB AUDIO', 'tab');
-		} catch (err) {
-			stopSystemAudio();
-			const name = err instanceof DOMException ? err.name : '';
-			if (name !== 'NotAllowedError' && name !== 'AbortError') {
-				sysError = 'FAILED TO CAPTURE TAB AUDIO';
-			}
-		}
 	}
 
 	onDestroy(() => {
@@ -307,31 +264,15 @@
 					type="button"
 					class="viz-chip-btn"
 					onclick={toggleDeviceAudio}
-					aria-pressed={sysPlaying && sysMode === 'device'}
-					title="Capture PC audio input / loopback / monitor device (audio only, no screen share)"
+					aria-pressed={sysPlaying}
+					title="Capture PC audio input / loopback / monitor device (audio only)"
 				>
-					<EvaHudBox size="sm" color={sysPlaying && sysMode === 'device' ? '#46f76a' : '#ff941a'}>
+					<EvaHudBox size="sm" color={sysPlaying ? '#46f76a' : '#ff941a'}>
 						<span class="viz-dual">
 							<span>AUDIO IN</span>
-							<span class="viz-dual__opt" class:is-lit={sysPlaying && sysMode === 'device'}>ON</span>
+							<span class="viz-dual__opt" class:is-lit={sysPlaying}>ON</span>
 							<span class="viz-dual__sep">/</span>
-							<span class="viz-dual__opt" class:is-lit={!(sysPlaying && sysMode === 'device')}>OFF</span>
-						</span>
-					</EvaHudBox>
-				</button>
-				<button
-					type="button"
-					class="viz-chip-btn"
-					onclick={toggleTabAudio}
-					aria-pressed={sysPlaying && sysMode === 'tab'}
-					title="Capture browser tab or screen audio via browser share prompt"
-				>
-					<EvaHudBox size="sm" color={sysPlaying && sysMode === 'tab' ? '#46f76a' : '#ff941a'}>
-						<span class="viz-dual">
-							<span>TAB</span>
-							<span class="viz-dual__opt" class:is-lit={sysPlaying && sysMode === 'tab'}>ON</span>
-							<span class="viz-dual__sep">/</span>
-							<span class="viz-dual__opt" class:is-lit={!(sysPlaying && sysMode === 'tab')}>OFF</span>
+							<span class="viz-dual__opt" class:is-lit={!sysPlaying}>OFF</span>
 						</span>
 					</EvaHudBox>
 				</button>
@@ -429,7 +370,7 @@
 				{/each}
 			</div>
 
-			{#if sysPlaying && sysMode === 'device' && audioInputs.length > 1}
+			{#if sysPlaying && audioInputs.length > 1}
 				<div class="viz-dev-row">
 					<span class="viz-dev-lbl eva-display">INPUT SOURCE</span>
 					<select
