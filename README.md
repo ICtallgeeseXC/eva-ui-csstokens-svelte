@@ -136,7 +136,32 @@ npm run package
 npm run build
 ```
 
-### Using as a Library
+### Using in Any Framework (Web Components, CSS Tokens & Svelte 5)
+
+`eva-ui` is **framework-agnostic** — it works in **React, Vue, Angular, Solid, Astro, vanilla HTML/JS, and Svelte 5**:
+
+1. **Native Web Components (`<eva-*>`)**: Every component compiles with `customElement: true` and `shadow: 'none'`, registering standard custom elements when imported (`<eva-panel>`, `<eva-stat-card>`, `<eva-progress-bar>`, `<eva-alert-banner>`, `<eva-hex-grid>`, etc.) while inheriting global `[data-eva-theme]` CRT tokens directly from the DOM.
+2. **Pure CSS Tokens & Primitives**: `eva-ui/tokens.css` and `eva-ui/base.css` require **zero JS** and expose all `--eva-*` variables plus utility classes (`.eva-root`, `.eva-grid-bg`, `.eva-btn`, `.eva-btn-danger`, `.eva-badge`, `.eva-display`, `.eva-num`).
+
+#### React / Vue / Vanilla HTML (Custom Elements + CSS)
+
+```ts
+// Register <eva-*> custom elements & load CRT tokens
+import 'eva-ui/tokens.css';
+import 'eva-ui/base.css';
+import 'eva-ui';
+```
+
+```html
+<div class="eva-root eva-grid-bg" data-eva-theme="nerv">
+	<eva-alert-banner severity="emergency" headline="EMERGENCY" subtext="PATTERN BLUE DETECTED"></eva-alert-banner>
+	<eva-stat-card label="PEAK THREAT" value="91" unit="PT" delta="CRITICAL" trend="up" sentiment="negative"></eva-stat-card>
+	<eva-progress-bar label="THREAT LEVEL" value="91" danger-mode="high" danger-threshold="70" unit="PT"></eva-progress-bar>
+	<button class="eva-btn">DEPLOY UNIT</button>
+</div>
+```
+
+#### Svelte 5
 
 ```svelte
 <script lang="ts">
@@ -152,8 +177,6 @@ npm run build
 	</EvaPanel>
 </div>
 ```
-
-All components also compile as custom elements (`<svelte:options customElement={{ tag: 'eva-*', shadow: 'none' }} />`) so they can be consumed outside Svelte while inheriting global CRT tokens.
 
 ---
 
