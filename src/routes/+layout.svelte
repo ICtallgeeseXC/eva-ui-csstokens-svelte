@@ -2,7 +2,7 @@
 	import '$lib/styles/tokens.css';
 	import '$lib/styles/base.css';
 	import { page } from '$app/state';
-	import { EVA_THEMES, EvaCrtControl, EvaHudBox, EvaTitleCard, type EvaTheme } from '$lib';
+	import { EVA_THEMES, EvaCrtControl, EvaTitleCard, type EvaTheme } from '$lib';
 	import type { Snippet } from 'svelte';
 
 	interface Props {
@@ -91,19 +91,13 @@
 					<EvaCrtControl compact />
 					<button
 						type="button"
-						class="hdr-toggle"
+						class="eva-btn hdr-toggle"
 						onclick={() => (headerHidden = true)}
-						aria-pressed={false}
-						title="Hide top header bar"
+						aria-expanded={true}
+						title="Collapse top navigation header"
 					>
-						<EvaHudBox size="sm" color="#46f76a">
-							<span class="hdr-dual">
-								<span>HDR</span>
-								<span class="hdr-dual__opt is-lit">ON</span>
-								<span class="hdr-dual__sep">/</span>
-								<span class="hdr-dual__opt">OFF</span>
-							</span>
-						</EvaHudBox>
+						<span class="hdr-toggle__arrow" aria-hidden="true">▲</span>
+						<span>HIDE HEADER</span>
 					</button>
 				</div>
 			</div>
@@ -111,19 +105,13 @@
 	{:else}
 		<button
 			type="button"
-			class="hdr-toggle hdr-toggle--floating"
+			class="eva-btn hdr-toggle hdr-toggle--tab"
 			onclick={() => (headerHidden = false)}
-			aria-pressed={true}
-			title="Show top header bar"
+			aria-expanded={false}
+			title="Restore top navigation header"
 		>
-			<EvaHudBox size="sm" color="#ff941a">
-				<span class="hdr-dual">
-					<span>HDR</span>
-					<span class="hdr-dual__opt">ON</span>
-					<span class="hdr-dual__sep">/</span>
-					<span class="hdr-dual__opt is-lit">OFF</span>
-				</span>
-			</EvaHudBox>
+			<span class="hdr-toggle__arrow" aria-hidden="true">▼</span>
+			<span>SHOW HEADER</span>
 		</button>
 	{/if}
 
@@ -220,44 +208,30 @@
 	}
 
 	.hdr-toggle {
-		background: none;
-		border: none;
-		padding: 0;
-		cursor: pointer;
-		display: inline-flex;
-		align-items: center;
+		min-height: 1.75rem;
+		padding: 0.2rem 0.6rem;
+		font-size: 0.72rem;
+		gap: 0.34rem;
+		--btn-c: var(--eva-text-muted);
 	}
 
-	.hdr-toggle--floating {
+	.hdr-toggle__arrow {
+		font-size: 0.62rem;
+		line-height: 1;
+	}
+
+	.hdr-toggle--tab {
 		position: fixed;
-		top: 0.5rem;
-		right: 0.85rem;
+		top: 0;
+		right: 1rem;
 		z-index: 45;
-		background: rgba(0, 0, 0, 0.88);
-		border-radius: 3px;
-		box-shadow: 0 2px 14px rgba(0, 0, 0, 0.9);
-	}
-
-	.hdr-dual {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.24rem;
-		font-family: var(--eva-font-display);
-		font-size: 0.68rem;
-		font-weight: 700;
-		letter-spacing: 0.05em;
-	}
-
-	.hdr-dual__opt {
-		opacity: 0.35;
-	}
-
-	.hdr-dual__opt.is-lit {
-		opacity: 1;
-	}
-
-	.hdr-dual__sep {
-		opacity: 0.45;
+		border-top: none;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+		outline-offset: 0;
+		--btn-c: var(--eva-primary);
+		background: rgba(0, 0, 0, 0.92);
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.92);
 	}
 
 	.theme-pill {
