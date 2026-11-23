@@ -430,34 +430,16 @@
 		</div>
 	</div>
 
-	<!-- Separate focused bottom HUD telemetry boxes (strict monospace + non-truncating widths) -->
+	<!-- Single crisp footer readout (auto-sized, zero ellipsis) -->
 	<div class="ev-ftr">
-		<EvaHudBox
-			size="xs"
-			color="#ff941a"
-			text={`BASS: ${String(Math.round(bassPct)).padStart(3, '0')}%`}
-			width="82px"
-			mono
-		/>
-		<EvaHudBox
-			size="xs"
-			color="#fff275"
-			borderColor="#ff941a"
-			text={`CH-L: ${String(Math.round(liveL * 100)).padStart(3, '0')}%`}
-			subtext={`CH-R: ${String(Math.round(liveR * 100)).padStart(3, '0')}%`}
-			width="84px"
-			mono
-		/>
 		<EvaHudBox
 			size="xs"
 			color="#fff275"
 			borderColor="#ff941a"
 			text="CENTROID:"
 			subtext={`${String(centroidHz).padStart(5, '0')} Hz`}
-			width="86px"
 			mono
 		/>
-		<EvaHudBox size="md" color="#ff941a" text="OBSERVED BY MAGI" />
 	</div>
 
 	{#if showControls}
@@ -545,7 +527,7 @@
 		align-items: center;
 		justify-content: flex-end;
 		gap: 0.45rem;
-		transform-origin: right center;
+		transform-origin: left center;
 	}
 
 	.ev-ch-txt {
@@ -578,12 +560,9 @@
 			transform: scale(1.22);
 		}
 
-		.ev-ftr {
-			gap: 0.6rem;
-		}
-
 		.ev-ftr :global(.eva-hud-box) {
-			zoom: 1.2;
+			transform: scale(1.18);
+			transform-origin: left center;
 		}
 	}
 
@@ -595,12 +574,9 @@
 			transform: scale(1.42);
 		}
 
-		.ev-ftr {
-			gap: 0.75rem;
-		}
-
 		.ev-ftr :global(.eva-hud-box) {
-			zoom: 1.38;
+			transform: scale(1.32);
+			transform-origin: left center;
 		}
 	}
 
