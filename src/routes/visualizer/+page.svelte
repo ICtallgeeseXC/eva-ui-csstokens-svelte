@@ -370,7 +370,7 @@
 				{/each}
 			</div>
 
-			{#if sysPlaying && audioInputs.length > 1}
+			{#if sysPlaying && audioInputs.length > 0}
 				<div class="viz-dev-row">
 					<span class="viz-dev-lbl eva-display">INPUT SOURCE</span>
 					<select
