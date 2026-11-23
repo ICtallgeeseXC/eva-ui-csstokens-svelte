@@ -250,4 +250,21 @@
 		justify-content: center;
 		font-size: 0.78rem;
 	}
+
+	@media (max-width: 640px) {
+		.hud-frame:has(.hud-bg.is-interactive) {
+			aspect-ratio: auto !important;
+			min-height: 210px;
+		}
+
+		.hud-bg.is-interactive {
+			position: relative;
+			inset: auto;
+		}
+
+		.hud-frame:has(.hud-bg.is-interactive) .hud-osd {
+			position: absolute;
+			inset: 0;
+		}
+	}
 </style>
