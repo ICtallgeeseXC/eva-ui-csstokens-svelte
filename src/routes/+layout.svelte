@@ -161,22 +161,6 @@
 		gap: 0.45rem;
 	}
 
-	@media (max-width: 640px) {
-		.topbar__inner {
-			padding: 0.5rem 0.75rem;
-			gap: 0.65rem;
-		}
-
-		.nav__link {
-			padding: 0.28rem 0.55rem;
-			font-size: 0.76rem;
-		}
-
-		.main-content {
-			padding: 1rem 0.75rem 2.5rem;
-		}
-	}
-
 	.nav__link {
 		text-decoration: none;
 		padding: 0.34rem 0.85rem;
@@ -272,5 +256,59 @@
 		margin: 0 auto;
 		padding: 1.5rem 1.25rem 3rem;
 		box-sizing: border-box;
+	}
+
+	@media (max-width: 1000px) {
+		.topbar__inner {
+			padding: 0.45rem 0.9rem;
+			gap: 0.5rem 0.75rem;
+		}
+
+		.nav {
+			gap: 0.32rem;
+		}
+
+		.nav__link {
+			padding: 0.24rem 0.54rem;
+			font-size: 0.74rem;
+			letter-spacing: 0.03em;
+		}
+
+		.theme-bar {
+			gap: 0.3rem;
+		}
+
+		.theme-pill {
+			padding: 0.16rem 0.45rem;
+			font-size: 0.68rem;
+			gap: 0.26rem;
+		}
+
+		.theme-pill__dot {
+			width: 4px;
+			height: 9px;
+		}
+
+		.hdr-toggle {
+			min-height: 1.48rem;
+			padding: 0.14rem 0.48rem;
+			font-size: 0.66rem;
+		}
+
+		.theme-bar :global(.eva-crt) {
+			transform: scale(0.88);
+			transform-origin: left center;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.topbar__inner {
+			padding: 0.42rem 0.7rem;
+			gap: 0.45rem;
+		}
+
+		.main-content {
+			padding: 1rem 0.75rem 2.5rem;
+		}
 	}
 </style>
