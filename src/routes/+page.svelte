@@ -1269,6 +1269,12 @@ import 'eva-ui/base.css';
 		gap: 1.25rem;
 	}
 
+	@media (max-width: 1000px) {
+		.grid-2 {
+			grid-template-columns: 1fr;
+		}
+	}
+
 	.stack {
 		display: flex;
 		flex-direction: column;

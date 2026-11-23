@@ -440,7 +440,7 @@
 		color: var(--eva-text-muted);
 	}
 
-	@media (max-width: 900px) {
+	@media (max-width: 1000px) {
 		.cmd-grid,
 		.cmd-bottom {
 			grid-template-columns: 1fr;

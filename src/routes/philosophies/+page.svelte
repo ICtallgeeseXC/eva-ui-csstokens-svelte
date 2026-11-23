@@ -270,7 +270,7 @@
 		gap: 1.15rem;
 	}
 
-	@media (max-width: 560px) {
+	@media (max-width: 1000px) {
 		.phil-grid {
 			grid-template-columns: 1fr;
 		}
