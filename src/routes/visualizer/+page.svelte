@@ -91,9 +91,12 @@
 	let controllerDuration = $state(0);
 
 	let sysPlaying = $state(false);
+	let sysMode = $state<'device' | 'tab' | null>(null);
 	let sysAnalyser = $state<AnalyserNode | null>(null);
-	let sysTrackLabel = $state('SYSTEM AUDIO // LIVE');
+	let sysTrackLabel = $state('LIVE AUDIO // INPUT');
 	let sysError = $state('');
+	let audioInputs = $state<{ deviceId: string; label: string }[]>([]);
+	let selectedDeviceId = $state('');
 
 	let sysStream: MediaStream | null = null;
 	let sysCtx: AudioContext | null = null;
@@ -102,6 +105,25 @@
 	const activePlaying = $derived(sysPlaying || controllerPlaying);
 	const activeAnalyser = $derived(sysPlaying && sysAnalyser ? sysAnalyser : controllerAnalyser);
 	const activeTrack = $derived(sysPlaying ? sysTrackLabel : controllerTrack);
+
+	async function refreshAudioInputs() {
+		if (typeof navigator === 'undefined' || !navigator.mediaDevices?.enumerateDevices) return;
+		try {
+			const devices = await navigator.mediaDevices.enumerateDevices();
+			const inputs = devices
+				.filter((d) => d.kind === 'audioinput')
+				.map((d, i) => ({
+					deviceId: d.deviceId,
+					label: d.label?.trim() || `AUDIO INPUT ${String(i).padStart(2, '0')}`
+				}));
+			audioInputs = inputs;
+			if (!selectedDeviceId && inputs.length > 0) {
+				// Prefer PipeWire/PulseAudio monitor or Stereo Mix if present
+				const monitor = inputs.find((d) => /monitor|loopback|stereo mix|blackhole|what u hear/i.test(d.label));
+				selectedDeviceId = (monitor ?? inputs[0]).deviceId;
+			}
+		} catch {}
+	}
 
 	function stopSystemAudio() {
 		try {
@@ -118,17 +140,88 @@
 		sysCtx = null;
 		sysAnalyser = null;
 		sysPlaying = false;
+		sysMode = null;
 	}
 
-	async function toggleSystemAudio() {
-		if (sysPlaying) {
+	function attachAudioStream(stream: MediaStream, trackLabelPrefix: string, mode: 'device' | 'tab') {
+		const audioTracks = stream.getAudioTracks();
+		const Ctx =
+			window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+		const ctx = new Ctx();
+		if (ctx.state === 'suspended') {
+			ctx.resume().catch(() => {});
+		}
+		const analyserNode = ctx.createAnalyser();
+		analyserNode.fftSize = 2048;
+		analyserNode.smoothingTimeConstant = 0.72;
+		const source = ctx.createMediaStreamSource(stream);
+		source.connect(analyserNode);
+
+		const label = audioTracks[0]?.label?.trim();
+		sysStream = stream;
+		sysCtx = ctx;
+		sysSource = source;
+		sysAnalyser = analyserNode;
+		sysTrackLabel = label ? `${trackLabelPrefix} // ${label.toUpperCase()}` : trackLabelPrefix;
+		sysMode = mode;
+		sysPlaying = true;
+
+		audioTracks[0]?.addEventListener('ended', () => {
+			stopSystemAudio();
+		});
+	}
+
+	async function startDeviceAudio(deviceIdOverride?: string) {
+		stopSystemAudio();
+		sysError = '';
+		if (typeof navigator === 'undefined' || !navigator.mediaDevices?.getUserMedia) {
+			sysError = 'AUDIO INPUT CAPTURE NOT SUPPORTED IN THIS BROWSER';
+			return;
+		}
+		try {
+			const targetId = deviceIdOverride ?? selectedDeviceId;
+			const stream = await navigator.mediaDevices.getUserMedia({
+				audio: {
+					...(targetId ? { deviceId: { exact: targetId } } : {}),
+					echoCancellation: false,
+					noiseSuppression: false,
+					autoGainControl: false
+				}
+			});
+			await refreshAudioInputs();
+			attachAudioStream(stream, 'AUDIO IN', 'device');
+		} catch (err) {
+			stopSystemAudio();
+			const name = err instanceof DOMException ? err.name : '';
+			if (name === 'NotAllowedError') {
+				sysError = 'AUDIO INPUT PERMISSION DENIED';
+			} else if (name === 'NotFoundError') {
+				sysError = 'NO AUDIO INPUT DEVICE FOUND';
+			} else if (name !== 'AbortError') {
+				sysError = 'FAILED TO OPEN AUDIO INPUT';
+			}
+		}
+	}
+
+	async function toggleDeviceAudio() {
+		if (sysPlaying && sysMode === 'device') {
 			stopSystemAudio();
 			sysError = '';
 			return;
 		}
+		await startDeviceAudio();
+	}
+
+	async function toggleTabAudio() {
+		if (sysPlaying && sysMode === 'tab') {
+			stopSystemAudio();
+			sysError = '';
+			return;
+		}
+		stopSystemAudio();
 		sysError = '';
 		if (typeof navigator === 'undefined' || !navigator.mediaDevices?.getDisplayMedia) {
-			sysError = 'SYSTEM AUDIO CAPTURE NOT SUPPORTED IN THIS BROWSER';
+			sysError = 'TAB / SCREEN AUDIO CAPTURE NOT SUPPORTED IN THIS BROWSER';
 			return;
 		}
 		try {
@@ -140,42 +233,21 @@
 					autoGainControl: false
 				}
 			});
-			// Stop video track immediately; we only need the audio feed
 			for (const vt of stream.getVideoTracks()) {
 				vt.stop();
 				stream.removeTrack(vt);
 			}
-			const audioTracks = stream.getAudioTracks();
-			if (audioTracks.length === 0) {
+			if (stream.getAudioTracks().length === 0) {
 				for (const t of stream.getTracks()) t.stop();
-				sysError = 'NO AUDIO TRACK — CHECK "SHARE SYSTEM AUDIO" IN THE BROWSER PROMPT';
+				sysError = 'NO AUDIO TRACK — CHECK "SHARE AUDIO" IN THE BROWSER PROMPT';
 				return;
 			}
-			const Ctx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-			const ctx = new Ctx();
-			if (ctx.state === 'suspended') await ctx.resume();
-			const analyserNode = ctx.createAnalyser();
-			analyserNode.fftSize = 2048;
-			analyserNode.smoothingTimeConstant = 0.72;
-			const source = ctx.createMediaStreamSource(stream);
-			source.connect(analyserNode);
-
-			const label = audioTracks[0].label?.trim();
-			sysStream = stream;
-			sysCtx = ctx;
-			sysSource = source;
-			sysAnalyser = analyserNode;
-			sysTrackLabel = label ? `SYSTEM AUDIO // ${label.toUpperCase()}` : 'SYSTEM AUDIO // LIVE';
-			sysPlaying = true;
-
-			audioTracks[0].addEventListener('ended', () => {
-				stopSystemAudio();
-			});
+			attachAudioStream(stream, 'TAB AUDIO', 'tab');
 		} catch (err) {
 			stopSystemAudio();
 			const name = err instanceof DOMException ? err.name : '';
 			if (name !== 'NotAllowedError' && name !== 'AbortError') {
-				sysError = 'FAILED TO CAPTURE SYSTEM AUDIO';
+				sysError = 'FAILED TO CAPTURE TAB AUDIO';
 			}
 		}
 	}
@@ -234,16 +306,32 @@
 				<button
 					type="button"
 					class="viz-chip-btn"
-					onclick={toggleSystemAudio}
-					aria-pressed={sysPlaying}
-					title="Capture PC / tab system audio (enable 'Share system audio' in browser prompt)"
+					onclick={toggleDeviceAudio}
+					aria-pressed={sysPlaying && sysMode === 'device'}
+					title="Capture PC audio input / loopback / monitor device (audio only, no screen share)"
 				>
-					<EvaHudBox size="sm" color={sysPlaying ? '#46f76a' : '#ff941a'}>
+					<EvaHudBox size="sm" color={sysPlaying && sysMode === 'device' ? '#46f76a' : '#ff941a'}>
 						<span class="viz-dual">
-							<span>SYS AUDIO</span>
-							<span class="viz-dual__opt" class:is-lit={sysPlaying}>ON</span>
+							<span>AUDIO IN</span>
+							<span class="viz-dual__opt" class:is-lit={sysPlaying && sysMode === 'device'}>ON</span>
 							<span class="viz-dual__sep">/</span>
-							<span class="viz-dual__opt" class:is-lit={!sysPlaying}>OFF</span>
+							<span class="viz-dual__opt" class:is-lit={!(sysPlaying && sysMode === 'device')}>OFF</span>
+						</span>
+					</EvaHudBox>
+				</button>
+				<button
+					type="button"
+					class="viz-chip-btn"
+					onclick={toggleTabAudio}
+					aria-pressed={sysPlaying && sysMode === 'tab'}
+					title="Capture browser tab or screen audio via browser share prompt"
+				>
+					<EvaHudBox size="sm" color={sysPlaying && sysMode === 'tab' ? '#46f76a' : '#ff941a'}>
+						<span class="viz-dual">
+							<span>TAB</span>
+							<span class="viz-dual__opt" class:is-lit={sysPlaying && sysMode === 'tab'}>ON</span>
+							<span class="viz-dual__sep">/</span>
+							<span class="viz-dual__opt" class:is-lit={!(sysPlaying && sysMode === 'tab')}>OFF</span>
 						</span>
 					</EvaHudBox>
 				</button>
@@ -340,6 +428,22 @@
 					</button>
 				{/each}
 			</div>
+
+			{#if sysPlaying && sysMode === 'device' && audioInputs.length > 1}
+				<div class="viz-dev-row">
+					<span class="viz-dev-lbl eva-display">INPUT SOURCE</span>
+					<select
+						class="viz-dev-select"
+						aria-label="Audio input device"
+						bind:value={selectedDeviceId}
+						onchange={() => startDeviceAudio(selectedDeviceId)}
+					>
+						{#each audioInputs as dev (dev.deviceId)}
+							<option value={dev.deviceId}>{dev.label}</option>
+						{/each}
+					</select>
+				</div>
+			{/if}
 
 			{#if sysError}
 				<div class="viz-sys-err eva-display" role="alert">{sysError}</div>
@@ -461,6 +565,35 @@
 		font-size: 0.78rem;
 		letter-spacing: 0.05em;
 		border-radius: 3px;
+	}
+
+	.viz-dev-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.55rem;
+		margin-bottom: 0.65rem;
+	}
+
+	.viz-dev-lbl {
+		font-size: 0.74rem;
+		letter-spacing: 0.06em;
+		color: var(--eva-text-muted);
+	}
+
+	.viz-dev-select {
+		flex: 1;
+		min-width: 200px;
+		max-width: 100%;
+		background: #000000;
+		color: var(--eva-primary);
+		border: 1.5px solid var(--eva-border-strong);
+		border-radius: 4px;
+		padding: 0.28rem 0.55rem;
+		font-family: var(--eva-font-display);
+		font-size: 0.78rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
 	}
 
 	.viz-tab {
