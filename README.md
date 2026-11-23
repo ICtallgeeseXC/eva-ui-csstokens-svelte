@@ -140,7 +140,7 @@ npm run build
 
 ```svelte
 <script lang="ts">
-	import '@eva-ui/tokens.css'; // or 'eva-ui/tokens.css'
+	import 'eva-ui/tokens.css';
 	import 'eva-ui/base.css';
 	import { EvaPanel, EvaStatCard, EvaProgressBar } from 'eva-ui';
 </script>
