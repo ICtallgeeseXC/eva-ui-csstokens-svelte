@@ -181,15 +181,17 @@
 
 	.eva-panel__title-row {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-between;
-		gap: 0.6rem;
+		gap: 0.45rem 0.6rem;
 	}
 
 	.eva-panel__title-group {
 		display: flex;
 		align-items: center;
 		gap: 0.55rem;
+		flex: 1 1 170px;
 		min-width: 0;
 	}
 
@@ -275,9 +277,10 @@
 
 	.eva-panel__right {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
-		gap: 0.5rem;
-		flex-shrink: 0;
+		gap: 0.45rem;
+		max-width: 100%;
 	}
 
 	.eva-panel__body {

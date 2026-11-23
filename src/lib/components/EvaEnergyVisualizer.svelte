@@ -483,6 +483,8 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.55rem;
+		container-type: inline-size;
+		min-width: 0;
 	}
 
 	.ev-wrap.is-live {
@@ -561,5 +563,56 @@
 		font-weight: 700;
 		color: var(--eva-text-muted);
 		margin-left: auto;
+	}
+
+	@container (max-width: 520px) {
+		.ev-stage {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 0.35rem;
+			align-items: start;
+		}
+
+		.ev-svg {
+			grid-column: 1 / -1;
+			order: 2;
+		}
+
+		.ev-hud-tl,
+		.ev-hud-tr,
+		.ev-hud-mid-l,
+		.ev-hud-mid-r {
+			position: static;
+			top: auto;
+			left: auto;
+			right: auto;
+		}
+
+		.ev-hud-tl {
+			order: 0;
+		}
+
+		.ev-hud-tr {
+			order: 1;
+			align-items: flex-end;
+		}
+
+		.ev-hud-mid-l {
+			order: 3;
+		}
+
+		.ev-hud-mid-r {
+			order: 4;
+			justify-self: end;
+		}
+
+		.ev-stage :global(.eva-hud-box) {
+			width: auto !important;
+			max-width: 100%;
+		}
+
+		.ev-ftr {
+			justify-content: flex-start;
+		}
 	}
 </style>

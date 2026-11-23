@@ -139,6 +139,7 @@
 		min-height: 100vh;
 		display: flex;
 		flex-direction: column;
+		overflow-x: clip;
 	}
 
 	.topbar {
@@ -168,7 +169,24 @@
 
 	.nav {
 		display: flex;
-		gap: 0.55rem;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+	}
+
+	@media (max-width: 640px) {
+		.topbar__inner {
+			padding: 0.5rem 0.75rem;
+			gap: 0.65rem;
+		}
+
+		.nav__link {
+			padding: 0.28rem 0.55rem;
+			font-size: 0.76rem;
+		}
+
+		.main-content {
+			padding: 1rem 0.75rem 2.5rem;
+		}
 	}
 
 	.nav__link {

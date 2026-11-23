@@ -470,9 +470,10 @@
 
 	.ac-status {
 		display: inline-flex;
+		flex-wrap: wrap;
 		align-items: center;
 		gap: 0.42rem;
-		flex-shrink: 0;
+		max-width: 100%;
 	}
 
 	.ac-chip-btn {

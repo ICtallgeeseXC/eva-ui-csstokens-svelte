@@ -1259,13 +1259,13 @@ import 'eva-ui/base.css';
 
 	.stats-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
 		gap: 0.85rem;
 	}
 
 	.grid-2 {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
 		gap: 1.25rem;
 	}
 
@@ -1459,7 +1459,7 @@ import 'eva-ui/base.css';
 	.atom-chamfers,
 	.def-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 175px), 1fr));
 		gap: 0.55rem;
 	}
 
