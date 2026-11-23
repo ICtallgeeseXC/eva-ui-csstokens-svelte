@@ -1,0 +1,117 @@
+/* ==========================================================================
+   EVA-UI // Design Tokens
+   Framework-agnostic CSS Custom Properties for NERV / MAGI / Telemetry UIs.
+   Compatible with auto-extracted [data-eva-motif="..."] overrides.
+   ========================================================================== */
+
+:root,
+[data-eva-theme="nerv"] {
+  --eva-bg: #000000;
+  --eva-surface: #030304;
+  --eva-surface-elevated: #08090c;
+  --eva-primary: #ff941a;
+  --eva-primary-bright: #ffb833;
+  --eva-primary-dim: rgba(255, 148, 26, 0.16);
+  --eva-accent: #ff2222;
+  --eva-accent-dim: rgba(255, 34, 34, 0.2);
+  --eva-gold: #fff275;
+  --eva-gold-dim: rgba(255, 242, 117, 0.18);
+  --eva-green: #46f76a;
+  --eva-success: #46f76a;
+  --eva-info: #72f7ff;
+  --eva-text: #ff941a;
+  --eva-text-hi: #fff2d6;
+  --eva-text-muted: rgba(255, 148, 26, 0.68);
+  --eva-border: rgba(255, 148, 26, 0.58);
+  --eva-border-strong: #ff941a;
+  --eva-grid: rgba(255, 148, 26, 0.08);
+  --eva-scanline: rgba(0, 0, 0, 0.34);
+
+  --eva-font-display: "Archivo Narrow", "Barlow Condensed", "Oswald", "Impact", sans-serif;
+  --eva-font-num: "Archivo Narrow", "Barlow Condensed", "Oswald", sans-serif;
+  --eva-font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --eva-font-sans: "Barlow Condensed", "Archivo Narrow", "Space Grotesk", system-ui, sans-serif;
+
+  --eva-radius-frame: 5px;
+  --eva-radius-pill: 999px;
+  --eva-chamfer-sm: 6px;
+  --eva-chamfer-md: 12px;
+  --eva-chamfer-lg: 18px;
+  --eva-border-width: 1.5px;
+  --eva-glow-strength: 0 0 10px;
+  --eva-bloom: 0 0 8px rgba(255, 148, 26, 0.35), 0 0 2px rgba(255, 184, 51, 0.45);
+  --eva-crt-opacity: 0.48;
+  --eva-crt-vignette: 0.22;
+}
+
+[data-eva-theme="emergency"] {
+  --eva-bg: #020001;
+  --eva-surface: #070103;
+  --eva-surface-elevated: #110306;
+  --eva-primary: #ff2222;
+  --eva-primary-bright: #ff5555;
+  --eva-primary-dim: rgba(255, 34, 34, 0.2);
+  --eva-accent: #ff941a;
+  --eva-accent-dim: rgba(255, 148, 26, 0.2);
+  --eva-text: #ff2222;
+  --eva-text-hi: #ffe6e6;
+  --eva-text-muted: rgba(255, 34, 34, 0.72);
+  --eva-border: rgba(255, 34, 34, 0.65);
+  --eva-border-strong: #ff2222;
+  --eva-grid: rgba(255, 34, 34, 0.1);
+  --eva-bloom: 0 0 10px rgba(255, 34, 34, 0.45), 0 0 2px rgba(255, 85, 85, 0.55);
+}
+
+[data-eva-theme="magi-cyan"] {
+  --eva-bg: #000407;
+  --eva-surface: #02080d;
+  --eva-surface-elevated: #05111a;
+  --eva-primary: #72f7ff;
+  --eva-primary-bright: #b8fbff;
+  --eva-primary-dim: rgba(114, 247, 255, 0.16);
+  --eva-accent: #ff941a;
+  --eva-accent-dim: rgba(255, 148, 26, 0.2);
+  --eva-text: #72f7ff;
+  --eva-text-hi: #ebfeff;
+  --eva-text-muted: rgba(114, 247, 255, 0.68);
+  --eva-border: rgba(114, 247, 255, 0.58);
+  --eva-border-strong: #72f7ff;
+  --eva-grid: rgba(114, 247, 255, 0.08);
+  --eva-bloom: 0 0 9px rgba(114, 247, 255, 0.4), 0 0 2px rgba(184, 251, 255, 0.48);
+}
+
+[data-eva-theme="sync"] {
+  --eva-bg: #000502;
+  --eva-surface: #020904;
+  --eva-surface-elevated: #041308;
+  --eva-primary: #46f76a;
+  --eva-primary-bright: #8cff9f;
+  --eva-primary-dim: rgba(70, 247, 106, 0.16);
+  --eva-accent: #ff2222;
+  --eva-accent-dim: rgba(255, 34, 34, 0.2);
+  --eva-text: #46f76a;
+  --eva-text-hi: #e8ffed;
+  --eva-text-muted: rgba(70, 247, 106, 0.68);
+  --eva-border: rgba(70, 247, 106, 0.58);
+  --eva-border-strong: #46f76a;
+  --eva-grid: rgba(70, 247, 106, 0.08);
+  --eva-bloom: 0 0 9px rgba(70, 247, 106, 0.4), 0 0 2px rgba(140, 255, 159, 0.45);
+}
+
+[data-eva-theme="mono"] {
+  --eva-bg: #000000;
+  --eva-surface: #050505;
+  --eva-surface-elevated: #0d0d0d;
+  --eva-primary: #fff275;
+  --eva-primary-bright: #fff9b8;
+  --eva-primary-dim: rgba(255, 242, 117, 0.14);
+  --eva-accent: #ff2222;
+  --eva-accent-dim: rgba(255, 34, 34, 0.2);
+  --eva-text: #fff275;
+  --eva-text-hi: #ffffff;
+  --eva-text-muted: rgba(255, 242, 117, 0.65);
+  --eva-border: rgba(255, 242, 117, 0.5);
+  --eva-border-strong: #fff275;
+  --eva-grid: rgba(255, 242, 117, 0.06);
+  --eva-bloom: 0 0 9px rgba(255, 242, 117, 0.36);
+}

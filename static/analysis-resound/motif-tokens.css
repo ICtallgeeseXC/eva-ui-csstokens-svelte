@@ -1,0 +1,127 @@
+/* Auto-generated Evangelion UI Motif Themes from Video Frame Analysis */
+
+/* NERV Amber / MAGI Terminal #1 (116 frames) */
+[data-eva-motif="motif_01"] {
+  --eva-bg: #000000;
+  --eva-surface: #0e1014;
+  --eva-primary: #ae7b12;
+  --eva-accent: #ff2e2e;
+  --eva-text: #f0ede6;
+}
+
+/* NERV Amber / MAGI Terminal #2 (78 frames) */
+[data-eva-motif="motif_02"] {
+  --eva-bg: #0e0502;
+  --eva-surface: #1c1516;
+  --eva-primary: #ba4c05;
+  --eva-accent: #9c2f07;
+  --eva-text: #f0ede6;
+}
+
+/* Crimson Emergency / Alert #3 (40 frames) */
+[data-eva-motif="motif_03"] {
+  --eva-bg: #1a0202;
+  --eva-surface: #281216;
+  --eva-primary: #c71f28;
+  --eva-accent: #ad0a0a;
+  --eva-text: #f0ede6;
+}
+
+/* NERV Amber / MAGI Terminal #4 (17 frames) */
+[data-eva-motif="motif_04"] {
+  --eva-bg: #150d0d;
+  --eva-surface: #231d21;
+  --eva-primary: #ff8c00;
+  --eva-accent: #483c37;
+  --eva-text: #f0ede6;
+}
+
+/* Crimson Emergency / Alert #5 (16 frames) */
+[data-eva-motif="motif_05"] {
+  --eva-bg: #050006;
+  --eva-surface: #13101a;
+  --eva-primary: #f9312c;
+  --eva-accent: #cf2926;
+  --eva-text: #f0ede6;
+}
+
+/* NERV Amber / MAGI Terminal #6 (11 frames) */
+[data-eva-motif="motif_06"] {
+  --eva-bg: #0e0406;
+  --eva-surface: #1c141a;
+  --eva-primary: #ff8c00;
+  --eva-accent: #ff2e2e;
+  --eva-text: #f0ede6;
+}
+
+/* NERV Amber / MAGI Terminal #7 (8 frames) */
+[data-eva-motif="motif_07"] {
+  --eva-bg: #0b1709;
+  --eva-surface: #19271d;
+  --eva-primary: #ff8c00;
+  --eva-accent: #8d938d;
+  --eva-text: #c6cac6;
+}
+
+/* Sync Green / Telemetry #8 (7 frames) */
+[data-eva-motif="motif_08"] {
+  --eva-bg: #010201;
+  --eva-surface: #0f1215;
+  --eva-primary: #338047;
+  --eva-accent: #47986d;
+  --eva-text: #f0ede6;
+}
+
+/* Violet / AT-Field Spectrum #9 (4 frames) */
+[data-eva-motif="motif_09"] {
+  --eva-bg: #040105;
+  --eva-surface: #121119;
+  --eva-primary: #7e06cb;
+  --eva-accent: #a7040f;
+  --eva-text: #f0ede6;
+}
+
+/* Sync Green / Telemetry #10 (3 frames) */
+[data-eva-motif="motif_10"] {
+  --eva-bg: #090a06;
+  --eva-surface: #171a1a;
+  --eva-primary: #d5d30a;
+  --eva-accent: #895a05;
+  --eva-text: #d5d30a;
+}
+
+/* NERV Amber / MAGI Terminal #11 (3 frames) */
+[data-eva-motif="motif_11"] {
+  --eva-bg: #000100;
+  --eva-surface: #0e1114;
+  --eva-primary: #ff8c00;
+  --eva-accent: #f8f8f5;
+  --eva-text: #f8f8f5;
+}
+
+/* MAGI Cyan / Radar HUD #12 (1 frames) */
+[data-eva-motif="motif_12"] {
+  --eva-bg: #08090c;
+  --eva-surface: #161920;
+  --eva-primary: #2b30cd;
+  --eva-accent: #3e40a3;
+  --eva-text: #dddde1;
+}
+
+/* Crimson Emergency / Alert #13 (1 frames) */
+[data-eva-motif="motif_13"] {
+  --eva-bg: #880615;
+  --eva-surface: #961629;
+  --eva-primary: #e11327;
+  --eva-accent: #ff2e2e;
+  --eva-text: #f0ede6;
+}
+
+/* Sync Green / Telemetry #14 (1 frames) */
+[data-eva-motif="motif_14"] {
+  --eva-bg: #08090c;
+  --eva-surface: #161920;
+  --eva-primary: #53a37a;
+  --eva-accent: #69bd97;
+  --eva-text: #a2f0d9;
+}

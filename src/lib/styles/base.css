@@ -1,0 +1,397 @@
+/* ==========================================================================
+   EVA-UI // Base CSS Primitives & Tactical Utilities
+   Pure CSS classes usable with or without Svelte.
+   ========================================================================== */
+
+.eva-root {
+  background-color: var(--eva-bg);
+  color: var(--eva-text);
+  font-family: var(--eva-font-mono);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  caret-color: transparent;
+  user-select: none;
+}
+
+.eva-root input,
+.eva-root textarea,
+.eva-root pre,
+.eva-root code,
+.eva-root .eva-selectable {
+  user-select: text;
+  caret-color: var(--eva-primary);
+}
+
+/* Sharp NERV fader styling for all range sliders */
+.eva-root input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 14px;
+  background: #020304;
+  border: 1px solid var(--eva-border-strong);
+  outline: none;
+  cursor: pointer;
+}
+
+.eva-root input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 18px;
+  background: var(--eva-primary);
+  border: 1px solid #040406;
+  cursor: pointer;
+}
+
+.eva-root input[type="range"]::-moz-range-thumb {
+  width: 12px;
+  height: 18px;
+  border-radius: 0;
+  background: var(--eva-primary);
+  border: 1px solid #040406;
+  cursor: pointer;
+}
+
+/* Chamfered tactical corners */
+.eva-chamfer {
+  clip-path: polygon(
+    var(--eva-chamfer-md) 0%,
+    100% 0%,
+    100% calc(100% - var(--eva-chamfer-md)),
+    calc(100% - var(--eva-chamfer-md)) 100%,
+    0% 100%,
+    0% var(--eva-chamfer-md)
+  );
+}
+
+.eva-chamfer-sm {
+  clip-path: polygon(
+    var(--eva-chamfer-sm) 0%,
+    100% 0%,
+    100% calc(100% - var(--eva-chamfer-sm)),
+    calc(100% - var(--eva-chamfer-sm)) 100%,
+    0% 100%,
+    0% var(--eva-chamfer-sm)
+  );
+}
+
+/* Subtle CRT scanline & phosphor bloom overlay + selectable mask modes */
+.eva-scanlines {
+  position: relative;
+  box-shadow:
+    inset 0 0 28px rgba(255, 148, 26, calc(0.08 * var(--eva-crt-opacity, 0.48))),
+    inset 0 0 36px rgba(0, 0, 0, calc(0.55 * var(--eva-crt-vignette, 0.22))),
+    0 0 14px rgba(0, 0, 0, 0.65);
+}
+
+.eva-scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 50%,
+    var(--eva-scanline) 50%,
+    var(--eva-scanline) 100%
+  );
+  background-size: 100% 4px;
+  background-repeat: repeat;
+  image-rendering: pixelated;
+  opacity: var(--eva-crt-opacity, 0.48);
+  z-index: 4;
+}
+
+/* Variation 2: Sony Trinitron Aperture Grille (uniform 2px raster + 4px vertical phosphor slits) */
+[data-eva-crt-mode="trinitron"] .eva-scanlines::after {
+  background-image:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 50%,
+      rgba(0, 0, 0, 0.36) 50%,
+      rgba(0, 0, 0, 0.36) 100%
+    ),
+    linear-gradient(
+      to right,
+      rgba(255, 148, 26, 0.09) 0%,
+      rgba(255, 148, 26, 0.09) 25%,
+      transparent 25%,
+      transparent 100%
+    );
+  background-size: 100% 2px, 4px 100%;
+}
+
+/* Variation 3: CRT Phosphor Shadow Mask (integer 4px checkerboard lattice + 4px raster) */
+[data-eva-crt-mode="shadow"] .eva-scanlines::after {
+  background-image:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 50%,
+      rgba(0, 0, 0, 0.28) 50%,
+      rgba(0, 0, 0, 0.28) 100%
+    ),
+    repeating-conic-gradient(
+      rgba(0, 0, 0, 0.28) 0deg 90deg,
+      transparent 90deg 180deg
+    );
+  background-size: 100% 4px, 4px 4px;
+}
+
+/* Variation 4: Wide Broadcast Monitor (uniform integer 6px scanline pitch) */
+[data-eva-crt-mode="wide"] .eva-scanlines::after {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.44) 50%,
+    rgba(0, 0, 0, 0.44) 100%
+  );
+  background-size: 100% 6px;
+}
+
+.eva-crt-glow {
+  text-shadow: 0 0 8px var(--eva-primary-dim), 0 0 2px var(--eva-primary);
+}
+
+/* Technical coordinate grid background */
+.eva-grid-bg {
+  background-image:
+    linear-gradient(to right, var(--eva-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--eva-grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Animated caution / hazard stripes */
+.eva-hazard {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--eva-primary),
+    var(--eva-primary) 10px,
+    var(--eva-bg) 10px,
+    var(--eva-bg) 20px
+  );
+}
+
+.eva-hazard-animated {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--eva-primary),
+    var(--eva-primary) 10px,
+    var(--eva-bg) 10px,
+    var(--eva-bg) 20px
+  );
+  background-size: 28.28px 28.28px;
+  animation: eva-hazard-scroll 1.2s linear infinite;
+}
+
+@keyframes eva-hazard-scroll {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 28.28px 0;
+  }
+}
+
+/* Typography helpers matching SEQ_039 / SEQ_040 / SEQ_042 / MAGI */
+.eva-display {
+  font-family: var(--eva-font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-weight: 700;
+  line-height: 1.05;
+  text-shadow: var(--eva-bloom);
+}
+
+.eva-num {
+  font-family: var(--eva-font-num);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.015em;
+  line-height: 1;
+  text-shadow: var(--eva-bloom);
+}
+
+.eva-mono-label {
+  font-family: var(--eva-font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--eva-text-muted);
+}
+
+.eva-glow-text {
+  text-shadow: var(--eva-bloom);
+}
+
+/* Signature Evangelion rounded double-outlined / pill-flanked frame containers */
+.eva-double-box {
+  background: var(--eva-bg);
+  border: 1.5px solid var(--eva-border-strong);
+  outline: 1px solid var(--eva-border);
+  outline-offset: 2px;
+  border-radius: var(--eva-radius-frame);
+  box-shadow: 0 0 12px var(--eva-primary-dim), inset 0 0 10px rgba(255, 148, 26, 0.06);
+}
+
+.eva-flanked-box {
+  position: relative;
+  padding-inline: 0.9rem;
+}
+
+.eva-flanked-box::before,
+.eva-flanked-box::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  width: 5px;
+  border-radius: var(--eva-radius-pill);
+  background: var(--eva-border-strong);
+  box-shadow: var(--eva-bloom);
+}
+
+.eva-flanked-box::before {
+  left: 0;
+}
+
+.eva-flanked-box::after {
+  right: 0;
+}
+
+/* Striped danger badge matching SEQ_042 [/// LOST ///] */
+.eva-striped-frame {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border: 1.5px solid var(--eva-accent);
+  box-shadow: 0 0 10px rgba(255, 34, 34, 0.4);
+  background: #000;
+  color: var(--eva-accent);
+}
+
+.eva-striped-frame::before,
+.eva-striped-frame::after {
+  content: "";
+  width: 10px;
+  align-self: stretch;
+  background: repeating-linear-gradient(
+    -55deg,
+    var(--eva-accent),
+    var(--eva-accent) 3px,
+    #000 3px,
+    #000 6px
+  );
+}
+
+/* Pure CSS Button primitive — MATSUSHIRO / TOKYO-3 double-outlined capsule */
+.eva-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 2.1rem;
+  padding: 0.36rem 0.95rem;
+  box-sizing: border-box;
+  font-family: var(--eva-font-display);
+  font-size: 0.88rem;
+  line-height: 1.15;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  color: var(--btn-c, var(--eva-primary));
+  background: #000000;
+  border: 1.5px solid var(--btn-c, var(--eva-border-strong));
+  outline: 1px solid color-mix(in srgb, var(--btn-c, var(--eva-border)) 58%, transparent);
+  outline-offset: 2px;
+  border-radius: var(--eva-radius-frame);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--btn-c, var(--eva-primary)) 18%, transparent);
+  text-shadow: 0 0 6px color-mix(in srgb, var(--btn-c, var(--eva-primary)) 38%, transparent);
+  cursor: pointer;
+  transition:
+    background-color 110ms ease,
+    color 110ms ease,
+    border-color 110ms ease,
+    outline-color 110ms ease,
+    box-shadow 110ms ease;
+}
+
+.eva-btn:hover {
+  background: color-mix(in srgb, var(--btn-c, var(--eva-primary)) 18%, #000000);
+  color: var(--eva-gold, #fff275);
+  text-shadow: 0 0 8px rgba(255, 242, 117, 0.65), 0 0 14px var(--eva-gold-dim, rgba(255, 242, 117, 0.25));
+  box-shadow: 0 0 14px var(--btn-c, var(--eva-border-strong));
+}
+
+.eva-btn:active {
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5), 0 0 14px var(--btn-c, var(--eva-border-strong));
+}
+
+.eva-btn-danger {
+  color: var(--eva-accent);
+  background: #000000;
+  border-color: var(--eva-accent);
+  outline-color: rgba(255, 34, 34, 0.55);
+  box-shadow: 0 0 10px rgba(255, 34, 34, 0.25);
+  text-shadow: 0 0 8px rgba(255, 34, 34, 0.45);
+}
+
+.eva-btn-danger:hover {
+  background: var(--eva-accent);
+  color: #000000;
+  text-shadow: none;
+}
+
+/* Pure CSS Badge — double-outlined CRT pill (MATSUSHIRO / TOKYO-3 / SUPPORT LINE) */
+.eva-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.14rem 0.58rem;
+  font-family: var(--eva-font-num);
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: 1.5px solid var(--eva-border-strong);
+  outline: 1px solid var(--eva-border);
+  outline-offset: 1px;
+  border-radius: 4px;
+  background: #000000;
+  color: var(--eva-primary);
+  text-shadow: var(--eva-bloom);
+  box-shadow: 0 0 8px var(--eva-primary-dim);
+}
+
+/* Pure CSS Tactical Skeleton Loader */
+.eva-skeleton {
+  height: 14px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 140, 0, 0.08) 25%,
+    rgba(255, 140, 0, 0.24) 50%,
+    rgba(255, 140, 0, 0.08) 75%
+  );
+  background-size: 200% 100%;
+  border: 1px solid rgba(255, 140, 0, 0.2);
+  animation: eva-skel-sweep 1.4s linear infinite;
+}
+
+@keyframes eva-skel-sweep {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}

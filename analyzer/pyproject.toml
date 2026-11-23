@@ -1,0 +1,16 @@
+[project]
+name = "eva-frame-analyzer"
+version = "0.1.0"
+description = "Perceptual frame deduplication, interconnected sequence & motif grouping, and palette token extraction for Evangelion UI videos."
+requires-python = ">=3.11"
+dependencies = [
+    "imagehash>=4.3.1",
+    "numpy>=1.26.0",
+    "opencv-python-headless>=4.9.0",
+    "pillow>=10.2.0",
+    "scikit-learn>=1.4.0",
+    "scipy>=1.12.0",
+]
+
+[project.scripts]
+eva-analyze = "eva_analyzer.cli:main"

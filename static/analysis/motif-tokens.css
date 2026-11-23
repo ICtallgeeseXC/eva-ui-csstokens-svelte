@@ -1,0 +1,415 @@
+/* Auto-generated Evangelion UI Motif Themes from Video Frame Analysis */
+
+/* Sync Green / Telemetry #1 (469 frames) */
+[data-eva-motif="motif_01"] {
+  --eva-bg: #000000;
+  --eva-surface: #0e1014;
+  --eva-primary: #6ae98f;
+  --eva-accent: #5e7418;
+  --eva-text: #6ae98f;
+}
+
+/* NERV Amber / MAGI Terminal #2 (175 frames) */
+[data-eva-motif="motif_02"] {
+  --eva-bg: #080101;
+  --eva-surface: #161115;
+  --eva-primary: #ba4c04;
+  --eva-accent: #a8b944;
+  --eva-text: #a8b944;
+}
+
+/* Crimson Emergency / Alert #3 (138 frames) */
+[data-eva-motif="motif_03"] {
+  --eva-bg: #2c0000;
+  --eva-surface: #3a1014;
+  --eva-primary: #d44512;
+  --eva-accent: #894515;
+  --eva-text: #f0ede6;
+}
+
+/* Crimson Emergency / Alert #4 (51 frames) */
+[data-eva-motif="motif_04"] {
+  --eva-bg: #390002;
+  --eva-surface: #471016;
+  --eva-primary: #a34b28;
+  --eva-accent: #b80c07;
+  --eva-text: #f0ede6;
+}
+
+/* MAGI Cyan / Radar HUD #5 (45 frames) */
+[data-eva-motif="motif_05"] {
+  --eva-bg: #030306;
+  --eva-surface: #11131a;
+  --eva-primary: #4e5e8d;
+  --eva-accent: #414f75;
+  --eva-text: #f0ede6;
+}
+
+/* Crimson Emergency / Alert #6 (40 frames) */
+[data-eva-motif="motif_06"] {
+  --eva-bg: #050203;
+  --eva-surface: #131217;
+  --eva-primary: #8c645a;
+  --eva-accent: #ff2e2e;
+  --eva-text: #f0ede6;
+}
+
+/* Crimson Emergency / Alert #7 (39 frames) */
+[data-eva-motif="motif_07"] {
+  --eva-bg: #090404;
+  --eva-surface: #171418;
+  --eva-primary: #970c05;
+  --eva-accent: #70a6e4;
+  --eva-text: #f0ede6;
+}
+
+/* NERV Amber / MAGI Terminal #8 (29 frames) */
+[data-eva-motif="motif_08"] {
+  --eva-bg: #140e0d;
+  --eva-surface: #221e21;
+  --eva-primary: #ff8c00;
+  --eva-accent: #594c45;
+  --eva-text: #f0ede6;
+}
+
+/* Monochrome Wireframe #9 (23 frames) */
+[data-eva-motif="motif_09"] {
+  --eva-bg: #272524;
+  --eva-surface: #353538;
+  --eva-primary: #9391a1;
+  --eva-accent: #81808d;
+  --eva-text: #a9a8aa;
+}
+
+/* MAGI Cyan / Radar HUD #10 (22 frames) */
+[data-eva-motif="motif_10"] {
+  --eva-bg: #191b1c;
+  --eva-surface: #272b30;
+  --eva-primary: #92a4b9;
+  --eva-accent: #858faa;
+  --eva-text: #c2cdd9;
+}
+
+/* MAGI Cyan / Radar HUD #11 (22 frames) */
+[data-eva-motif="motif_11"] {
+  --eva-bg: #0a0511;
+  --eva-surface: #181525;
+  --eva-primary: #336db9;
+  --eva-accent: #1f427c;
+  --eva-text: #c6d7bd;
+}
+
+/* MAGI Cyan / Radar HUD #12 (22 frames) */
+[data-eva-motif="motif_12"] {
+  --eva-bg: #1d123c;
+  --eva-surface: #2b2250;
+  --eva-primary: #4f63b3;
+  --eva-accent: #7a5a39;
+  --eva-text: #f0ede6;
+}
+
+/* Violet / AT-Field Spectrum #13 (21 frames) */
+[data-eva-motif="motif_13"] {
+  --eva-bg: #2d0000;
+  --eva-surface: #3b1014;
+  --eva-primary: #b22672;
+  --eva-accent: #ff2e2e;
+  --eva-text: #f0ede6;
+}
+
+/* Crimson Emergency / Alert #14 (21 frames) */
+[data-eva-motif="motif_14"] {
+  --eva-bg: #160000;
+  --eva-surface: #241014;
+  --eva-primary: #d90c13;
+  --eva-accent: #b5000c;
+  --eva-text: #f0ede6;
+}
+
+/* NERV Amber / MAGI Terminal #15 (21 frames) */
+[data-eva-motif="motif_15"] {
+  --eva-bg: #090911;
+  --eva-surface: #171925;
+  --eva-primary: #9b4e16;
+  --eva-accent: #389f77;
+  --eva-text: #f0ede6;
+}
+
+/* Sync Green / Telemetry #16 (18 frames) */
+[data-eva-motif="motif_16"] {
+  --eva-bg: #000000;
+  --eva-surface: #0e1014;
+  --eva-primary: #4ff7ad;
+  --eva-accent: #47d28a;
+  --eva-text: #4ff7ad;
+}
+
+/* Sync Green / Telemetry #17 (17 frames) */
+[data-eva-motif="motif_17"] {
+  --eva-bg: #040703;
+  --eva-surface: #121717;
+  --eva-primary: #26ae4a;
+  --eva-accent: #228837;
+  --eva-text: #f0ede6;
+}
+
+/* Crimson Emergency / Alert #18 (16 frames) */
+[data-eva-motif="motif_18"] {
+  --eva-bg: #040203;
+  --eva-surface: #121217;
+  --eva-primary: #4a272b;
+  --eva-accent: #ff2e2e;
+  --eva-text: #cdcbc9;
+}
+
+/* MAGI Cyan / Radar HUD #19 (12 frames) */
+[data-eva-motif="motif_19"] {
+  --eva-bg: #030b3e;
+  --eva-surface: #111b52;
+  --eva-primary: #1b5c91;
+  --eva-accent: #0c3d81;
+  --eva-text: #f0ede6;
+}
+
+/* Crimson Emergency / Alert #20 (11 frames) */
+[data-eva-motif="motif_20"] {
+  --eva-bg: #101010;
+  --eva-surface: #1e2024;
+  --eva-primary: #844139;
+  --eva-accent: #7074a7;
+  --eva-text: #f9fcfe;
+}
+
+/* Sync Green / Telemetry #21 (10 frames) */
+[data-eva-motif="motif_21"] {
+  --eva-bg: #5a1324;
+  --eva-surface: #682338;
+  --eva-primary: #3cab4e;
+  --eva-accent: #93063b;
+  --eva-text: #f0ede6;
+}
+
+/* NERV Amber / MAGI Terminal #22 (10 frames) */
+[data-eva-motif="motif_22"] {
+  --eva-bg: #010102;
+  --eva-surface: #0f1116;
+  --eva-primary: #ff8c00;
+  --eva-accent: #babfd9;
+  --eva-text: #babfd9;
+}
+
+/* Sync Green / Telemetry #23 (10 frames) */
+[data-eva-motif="motif_23"] {
+  --eva-bg: #010016;
+  --eva-surface: #0f102a;
+  --eva-primary: #43aa85;
+  --eva-accent: #ff2e2e;
+  --eva-text: #f0ede6;
+}
+
+/* NERV Amber / MAGI Terminal #24 (9 frames) */
+[data-eva-motif="motif_24"] {
+  --eva-bg: #080e11;
+  --eva-surface: #161e25;
+  --eva-primary: #be5d0f;
+  --eva-accent: #b96a31;
+  --eva-text: #f0ede6;
+}
+
+/* MAGI Cyan / Radar HUD #25 (8 frames) */
+[data-eva-motif="motif_25"] {
+  --eva-bg: #08090c;
+  --eva-surface: #161920;
+  --eva-primary: #235d7c;
+  --eva-accent: #68818d;
+  --eva-text: #96b1bb;
+}
+
+/* Crimson Emergency / Alert #26 (8 frames) */
+[data-eva-motif="motif_26"] {
+  --eva-bg: #241e22;
+  --eva-surface: #322e36;
+  --eva-primary: #df2533;
+  --eva-accent: #b12e3a;
+  --eva-text: #b2b8c5;
+}
+
+/* Crimson Emergency / Alert #27 (7 frames) */
+[data-eva-motif="motif_27"] {
+  --eva-bg: #111516;
+  --eva-surface: #1f252a;
+  --eva-primary: #631e29;
+  --eva-accent: #8e7d6f;
+  --eva-text: #bbb1af;
+}
+
+/* Violet / AT-Field Spectrum #28 (7 frames) */
+[data-eva-motif="motif_28"] {
+  --eva-bg: #301215;
+  --eva-surface: #3e2229;
+  --eva-primary: #6b1240;
+  --eva-accent: #663c2e;
+  --eva-text: #f0ede6;
+}
+
+/* Sync Green / Telemetry #29 (7 frames) */
+[data-eva-motif="motif_29"] {
+  --eva-bg: #0d0608;
+  --eva-surface: #1b161c;
+  --eva-primary: #b7c878;
+  --eva-accent: #66559d;
+  --eva-text: #b7c878;
+}
+
+/* Crimson Emergency / Alert #30 (7 frames) */
+[data-eva-motif="motif_30"] {
+  --eva-bg: #2c1116;
+  --eva-surface: #3a212a;
+  --eva-primary: #c6222b;
+  --eva-accent: #d48184;
+  --eva-text: #d1dcd1;
+}
+
+/* Crimson Emergency / Alert #31 (7 frames) */
+[data-eva-motif="motif_31"] {
+  --eva-bg: #040203;
+  --eva-surface: #121217;
+  --eva-primary: #89210b;
+  --eva-accent: #6e4f40;
+  --eva-text: #f0ede6;
+}
+
+/* Sync Green / Telemetry #32 (6 frames) */
+[data-eva-motif="motif_32"] {
+  --eva-bg: #071907;
+  --eva-surface: #15291b;
+  --eva-primary: #1f5627;
+  --eva-accent: #133a18;
+  --eva-text: #b1b9b5;
+}
+
+/* Sync Green / Telemetry #33 (6 frames) */
+[data-eva-motif="motif_33"] {
+  --eva-bg: #061305;
+  --eva-surface: #142319;
+  --eva-primary: #30a740;
+  --eva-accent: #aa6139;
+  --eva-text: #f0ede6;
+}
+
+/* NERV Amber / MAGI Terminal #34 (5 frames) */
+[data-eva-motif="motif_34"] {
+  --eva-bg: #0a0a0a;
+  --eva-surface: #181a1e;
+  --eva-primary: #ff8c00;
+  --eva-accent: #c9c9c6;
+  --eva-text: #c9c9c6;
+}
+
+/* Crimson Emergency / Alert #35 (4 frames) */
+[data-eva-motif="motif_35"] {
+  --eva-bg: #0c0504;
+  --eva-surface: #1a1518;
+  --eva-primary: #7a1923;
+  --eva-accent: #ff2e2e;
+  --eva-text: #d5ced8;
+}
+
+/* Sync Green / Telemetry #36 (3 frames) */
+[data-eva-motif="motif_36"] {
+  --eva-bg: #08090c;
+  --eva-surface: #161920;
+  --eva-primary: #499c71;
+  --eva-accent: #2a7341;
+  --eva-text: #f0ede6;
+}
+
+/* NERV Amber / MAGI Terminal #37 (3 frames) */
+[data-eva-motif="motif_37"] {
+  --eva-bg: #151419;
+  --eva-surface: #23242d;
+  --eva-primary: #ff8c00;
+  --eva-accent: #798f94;
+  --eva-text: #c2cac8;
+}
+
+/* Crimson Emergency / Alert #38 (3 frames) */
+[data-eva-motif="motif_38"] {
+  --eva-bg: #191415;
+  --eva-surface: #272429;
+  --eva-primary: #a73e18;
+  --eva-accent: #eebcbd;
+  --eva-text: #eebcbd;
+}
+
+/* MAGI Cyan / Radar HUD #39 (2 frames) */
+[data-eva-motif="motif_39"] {
+  --eva-bg: #0a0e19;
+  --eva-surface: #181e2d;
+  --eva-primary: #1e3563;
+  --eva-accent: #ff2e2e;
+  --eva-text: #d3c0d2;
+}
+
+/* Sync Green / Telemetry #40 (2 frames) */
+[data-eva-motif="motif_40"] {
+  --eva-bg: #131d13;
+  --eva-surface: #212d27;
+  --eva-primary: #3ea649;
+  --eva-accent: #703422;
+  --eva-text: #b5e0de;
+}
+
+/* MAGI Cyan / Radar HUD #41 (1 frames) */
+[data-eva-motif="motif_41"] {
+  --eva-bg: #08090c;
+  --eva-surface: #161920;
+  --eva-primary: #2b31cc;
+  --eva-accent: #3e41a3;
+  --eva-text: #dddde1;
+}
+
+/* NERV Amber / MAGI Terminal #42 (1 frames) */
+[data-eva-motif="motif_42"] {
+  --eva-bg: #0b1908;
+  --eva-surface: #19291c;
+  --eva-primary: #ff8c00;
+  --eva-accent: #5b625a;
+  --eva-text: #aeb4ae;
+}
+
+/* Sync Green / Telemetry #43 (1 frames) */
+[data-eva-motif="motif_43"] {
+  --eva-bg: #08090c;
+  --eva-surface: #161920;
+  --eva-primary: #68be96;
+  --eva-accent: #52a378;
+  --eva-text: #a2f1d9;
+}
+
+/* NERV Amber / MAGI Terminal #44 (1 frames) */
+[data-eva-motif="motif_44"] {
+  --eva-bg: #140f10;
+  --eva-surface: #221f24;
+  --eva-primary: #ff8c00;
+  --eva-accent: #ff2e2e;
+  --eva-text: #f0ede6;
+}
+
+/* MAGI Cyan / Radar HUD #45 (1 frames) */
+[data-eva-motif="motif_45"] {
+  --eva-bg: #060603;
+  --eva-surface: #141617;
+  --eva-primary: #108c95;
+  --eva-accent: #0a6c7a;
+  --eva-text: #f0ede6;
+}
+
+/* Crimson Emergency / Alert #46 (1 frames) */
+[data-eva-motif="motif_46"] {
+  --eva-bg: #1d0102;
+  --eva-surface: #2b1116;
+  --eva-primary: #d22e39;
+  --eva-accent: #901e2e;
+  --eva-text: #f0ede6;
+}
